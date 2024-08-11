@@ -3,7 +3,10 @@
 import React, { useState, useEffect } from 'react';
 import { kashiContract } from '../DataProviders/kashiContract';
 
-function GetMySubscriptions() {
+function GetMySubscriptions({
+    walletAddress,
+    businessId
+}) {
     const [subscriptions, setSubscriptions] = useState(null);
     
     useEffect(() => {
@@ -24,7 +27,7 @@ function GetMySubscriptions() {
             });
         }
 
-        fetchSubscriptions("0x44AC194359fA44eCe6Cb2E53E8c90547BCCb95a0", 0);
+        fetchSubscriptions(walletAddress, businessId);
     }, []);
     
     return (

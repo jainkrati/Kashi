@@ -1,10 +1,9 @@
 import "./App.css";
-
+import React, { useState } from "react";
 import WalletCard from "./Components/walletCard";
 import BusinessSetter from "./Components/businessSetter";
 import GetBusinesses from "./Components/getBusinesses";
 import GetMySubscriptions from "./Components/getMySubscriptions";
-import { Wallet } from "ethers";
 
 function App() {
   const [walletAddress, setWalletAddress] = useState(
@@ -17,7 +16,7 @@ function App() {
       {/* <LoginComponent /> */}
       <header className="App-header">
         {/* <Admin /> */}
-        <Wallet />
+        <WalletCard />
         <BusinessSetter setter={setBusinessId} />
         <GetBusinesses walletAddress={walletAddress} businessId={businessId} />
         <GetMySubscriptions

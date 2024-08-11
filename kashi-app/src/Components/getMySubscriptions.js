@@ -12,17 +12,18 @@ function GetMySubscriptions() {
             let subscriptions = []
             try {
                 subscriptions = await contract.userSubscriptions(address, businessId);
-                console.log(subscriptions);
             } catch (e) {
                 console.error(e);
             }
 
-            setSubscriptions(subscriptions.map(subscription => 
-                JSON.stringify(subscription),
-            )
-            );
+            setSubscriptions({
+                businessId: subscriptions.businessId.toNumber(),
+                tierName: subscriptions.tierName,
+                startDateTime: new Date(subscriptions.startDateTime.toNumber()* 1000).toString(),
+                nextPaymentDueDate: new Date(subscriptions.nextPaymentDueDate.toNumber()* 1000).toString(),
+            });
         }
-    
+
         fetchSubscriptions("0x44AC194359fA44eCe6Cb2E53E8c90547BCCb95a0", 0);
     }, []);
     
@@ -30,18 +31,13 @@ function GetMySubscriptions() {
         <div>
             { subscriptions === null ? <p>Loading...</p> :
             <div>
-                <h1>Subscriptions</h1>
-                { subscriptions.length === 0 ? <p>No subscriptions found</p> : 
-                subscriptions.map((subscription, index) => (
-                    <div key={index}>
-                        <p> { subscription }</p>
-                        <p>Business Id: {subscription.businessId}</p>
-                        <p>Tier: {subscription.tierName}</p>
-                        <p>Start Date: {subscription.startDateTime}</p>
-                        <p>Next Payment Due Date: {subscription.nextPaymentDueDate}</p>
-                    </div>
-                ))
-                }
+                <h1>Active Subscriptions</h1>
+                <div>
+                    <p>Business Id: {subscriptions.businessId}</p>
+                    <p>Tier: {subscriptions.tierName}</p>
+                    <p>Start Date: {subscriptions.startDateTime}</p>
+                    <p>Next Payment Due Date: {subscriptions.nextPaymentDueDate}</p> 
+                </div>
             </div>
             }
         </div>

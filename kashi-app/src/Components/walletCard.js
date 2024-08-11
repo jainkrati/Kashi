@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { ethers } from "ethers";
 
 const provider = new ethers.providers.Web3Provider(window.ethereum);
-const WalletCard = () => {
+const WalletCard = ({ walletSetter }) => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [defaultAccount, setDefaultAccount] = useState(null);
   const [userBalance, setUserBalance] = useState(null);
@@ -19,6 +19,7 @@ const WalletCard = () => {
   const accountChangedHandler = async (newAccount) => {
     const address = await newAccount.getAddress();
     setDefaultAccount(address);
+    walletSetter(address);
     const balance = await newAccount.getBalance();
     setUserBalance(ethers.utils.formatEther(balance));
     await getuserBalance(address);

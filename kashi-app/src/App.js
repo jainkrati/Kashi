@@ -16,7 +16,7 @@ function App() {
       {/* <LoginComponent /> */}
       <header className="App-header">
         {/* <Admin /> */}
-        <WalletCard />
+        <WalletCard walletSetter={setWalletAddress} />
         <BusinessSetter setter={setBusinessId} />
         <GetBusinesses walletAddress={walletAddress} businessId={businessId} />
         <GetMySubscriptions

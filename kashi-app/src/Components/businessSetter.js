@@ -6,12 +6,15 @@ import { kashiContract } from '../DataProviders/kashiContract';
 function BusinessSetter({
     setter
 }) {
-    const [businessId, setBusinessId] = useState(null);
+    const [maxBusinessId, setMaxBusinessId] = useState(null);
+    function handleChange(event) {
+        setter(event.target.value);
+    }
     useEffect(() => {
         async function fetchMaxBusinessId() {
             const contract = kashiContract;
             let maxBusinessId = await contract.businessId();
-            setBusinessId(maxBusinessId.toNumber());
+            setMaxBusinessId(maxBusinessId.toNumber() - 1);
         }
     
         fetchMaxBusinessId();
@@ -21,19 +24,16 @@ function BusinessSetter({
         <div>
             <label>
             Select Business Id:
-            { businessId === null ? <p>Loading...</p> :
-            <select name="businessId" onChange={setter}>
-                {
-                Array.from({length: businessId}, (_, i) => i).map((i) => {
-                    <option value={i}>{i}</option>
+            { maxBusinessId === null ? <p>Loading...</p> :
+            <select name="businessId" onChange={handleChange}>
+                {Array.from({length: maxBusinessId}, (v, k) => k+1).map((id) => {
+                    return <option value={id}>{id}</option>
                 })}
             </select>
             }
             </label>
-
-        <h1>Business Id: {businessId}</h1>
         </div>
     );
-    }
+}
 
 export default BusinessSetter;

@@ -24,11 +24,7 @@ function BusinessSetter({
             { businessId === null ? <p>Loading...</p> :
             <select name="businessId" onChange={setter}>
                 {
-                    let newArray = [];
-                    for (let i = 0; i < number; i++) {
-                        newArray.push(i + 1);
-                    }
-                    newArray.map((i) => {
+                Array.from({length: businessId}, (_, i) => i).map((i) => {
                     <option value={i}>{i}</option>
                 })}
             </select>
